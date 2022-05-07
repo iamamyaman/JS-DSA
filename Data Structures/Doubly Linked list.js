@@ -28,14 +28,75 @@ class DoublyLinkedList{
     }
 
     pop(){
-        if(this.length===0) return undefined;
+        if(!this.head) return null;
+        var removed = this.tail;
+        if(this.length===1){
+            this.head=null;
+            this.tail = null;
+        }
         else{
-            var currentTail = this.tail;
             var prev = this.tail.prev;
             prev.next = null;
             this.tail = prev;
         }
         this.length--;
-        return currentTail;
+        return removed;
+       }
+
+    shift(){
+        if(!this.head) return undefined;
+        var oldHead = this.head;
+        if(this.length===1){
+            this.head=null;
+          this.tail= null;
+        }
+        else{
+           this.head = oldHead.next;
+           this.head.prev = null;
+        }
+        this.length--;
+        return this;
     }
+
+    unshift(val){
+        var newNode = new Node(val);
+        var oldHead = this.head;
+        if(!this.head){
+            this.head = newNode;
+            this.tail = this.head;
+        }
+        else{
+            oldHead.prev = newNode;
+            newNode.next = oldHead;
+            this.head = newNode;
+        }
+        this.length++;
+        return this;
+    }
+
+    get(index){ 
+        if(index<0 || index >= this.length) return null;
+        if(index <= this.length/2){
+            var current = this.head;
+            for(let i=0;i<index;i++){
+                current = current.next;
+            }
+            return current;
+        }
+        else{
+            index = this.length-index-1;
+            var current = this.tail;
+             for(let i=0;i<index;i++){
+                current = current.prev;
+            }
+            return current;
+        }
+    }
+
 }
+
+var list = new DoublyLinkedList();
+
+
+
+
